@@ -1,11 +1,11 @@
 import random
 
-def jogar_forca():
+def menssagemAbertura():
     print("*********************************")
     print("***Bem vindo ao jogo da FORCA!***")
     print("*********************************")
 
-
+def palavraSecreta():
     arquivo = open("palavras.txt", "r")
     palavras = []
 
@@ -17,7 +17,29 @@ def jogar_forca():
 
     numero = random.randrange(0, len(palavras))
     palavra_secreta = palavras[numero].upper()
+    return palavra_secreta
 
+def solicitaChute():
+    chute = input("Qual letra??")
+    chute = chute.strip().upper() #não deixa espaços no inicio e no final
+    return chute
+
+def marca_chuteCorreto(chute, palavra_secreta, letra):
+    index = 0
+    for letra in palavra_secreta:
+        if(chute == letra):
+            letras_acertadas[index] = letra
+        index += 1
+
+def menssagemVencedor():
+    print("Você Ganhou!!")
+def menssagemPerdedor():
+    print("Você Perdeu :/")
+    
+def jogar_forca():
+
+    menssagemAbertura()
+    palavra_secreta = palavraSecreta()  
    
     letras_acertadas = ["_" for letra in palavra_secreta]
     
@@ -26,16 +48,10 @@ def jogar_forca():
     erros = 0
 
     while(not enforcou and not acertou):
-        chute = input("Qual letra??")
-        chute = chute.strip().upper() #não deixa espaços no inicio e no final
-
+        chute = solicitaChute()
        
         if (chute in palavra_secreta):
-            index = 0
-            for letra in palavra_secreta:
-                if(chute == letra):
-                    letras_acertadas[index] = letra
-                index += 1
+            marca_chuteCorreto(chute, palavra_secreta, letra)
         else:
             erros += 1
 
@@ -45,9 +61,10 @@ def jogar_forca():
 
         
     if(acertou):
-        print("Você ganhou!!")
+        menssagemVencedor()
     else:
-        print("Você perdeu!!")
+        menssagemPerdedor()
+        
     print("Fim do jogo")
 
 if(__name__ == "__main__"):
